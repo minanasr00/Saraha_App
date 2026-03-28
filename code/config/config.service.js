@@ -1,0 +1,42 @@
+import { resolve } from 'node:path'
+import { config } from 'dotenv'
+
+export const NODE_ENV = process.env.NODE_ENV
+
+const envPath = {
+    development: `.env.development`,
+    production: `.env.production`,
+}
+console.log({ en: envPath[NODE_ENV] });
+
+
+config({ path: resolve(`./config/${envPath[NODE_ENV]}`) })
+
+
+export const port = process.env.PORT ?? 7000
+
+//dataBase
+export const DB_uri=process.env.DB_URI
+
+//encryption
+export const algorithm = process.env.ALGORITHM
+export const securityKey = process.env.SECRET_KEY
+
+//token
+export const USER_ACCESS_TOKEN = process.env.USER_ACCESS_TOKEN_SECRET
+export const ADMIN_ACCESS_TOKEN = process.env.ADMIN_ACCESS_TOKEN_SECRET
+export const USER_REFRESH_TOKEN = process.env.USER_REFRESH_TOKEN_SECRET
+export const ADMIN_REFRESH_TOKEN = process.env.ADMIN_REFRESH_TOKEN_SECRET
+export const REFRESH_TOKEN_EXPIRES_IN = process.env.REFRESH_TOKEN_EXPIRES_IN
+export const ACCESS_TOKEN_EXPIRES_IN = process.env.ACCESS_TOKEN_EXPIRES_IN
+
+//email
+export const EMAIL_USER = process.env.EMAIL_USER
+export const EMAIL_PASSWORD = process.env.EMAIL_PASSWORD
+export const EMAIL_SERVICE = process.env.EMAIL_SERVICE
+
+//redis
+export const REDIS_URI = process.env.REDIS_URI
+
+export const SALT_ROUND = parseInt(process.env.SALT_ROUND ?? '10')
+console.log({SALT_ROUND});
