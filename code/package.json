@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start:dev": "cross-env NODE_ENV=development node --watch ./src/index",
-    "start": "cross-env NODE_ENV=production pm2 start ./src/index -i 0"
+    "start": "cross-env NODE_ENV=production pm2 start ./src/index.js -i 0"
   },
   "keywords": [
     "saraha",
