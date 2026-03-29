@@ -4,7 +4,11 @@ import { DB_uri } from "../../config/config.service.js";
 
 export default async function authenticateDB() {
   try {
-    await mongoose.connect(DB_uri);
+    await mongoose.connect(DB_uri, {
+       serverSelectionTimeoutMS: 5000,
+  socketTimeoutMS: 45000,
+    });
+    
     console.log("Connected successfully to DB 🟢");
 
     await UserModel.syncIndexes();

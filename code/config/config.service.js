@@ -16,7 +16,8 @@ config({ path: resolve(`./config/${envPath[NODE_ENV]}`) })
 export const port = process.env.PORT ?? 7000
 
 //dataBase
-export const DB_uri=process.env.DB_URI
+export const DB_uri = process.env.DB_URI
+
 
 //encryption
 export const algorithm = process.env.ALGORITHM
