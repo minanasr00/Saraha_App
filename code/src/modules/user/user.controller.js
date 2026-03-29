@@ -86,7 +86,7 @@ router.post("/signup", validateRequest(signupschema), async (req, res, next) => 
 router.post("/login", limiter, validateRequest(loginschema), async (req, res, next) => {
   try {
     const user = await login(req.body, `${req.protocol}://${req.host}`);
-    await redisClient.del(`${req.ip}-${req.path}`)
+     await redisClient.del(`${req.ip}-${req.path}`)
     return successResponse({
       res,
       statusCode: 200,

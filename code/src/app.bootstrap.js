@@ -49,7 +49,10 @@ export default async function bootstrap() {
 //   },
   
 // })
-
+  app.get("/", (req, res, next) => {
+  res.json("hello world")
+})
+  
   if (process.env.NODE_ENV === "development") app.use(morgan("combined"));
   app.use(cors(),helmet(),express.json());
 
