@@ -148,7 +148,7 @@ export const ProfilePicture = async (user, file) => {
 }
 
 export const coverPicture = async (user, files) => { 
-  user.coverProfilePictures = files.map(file=> file.finalPath);
+  user.coverProfilePictures = files.map(file=> file.finalPath=user.coverProfilePictures?.length ? [...user.coverProfilePictures, file.finalPath] : [file.finalPath]);
   await user.save();
   return user;
 }
