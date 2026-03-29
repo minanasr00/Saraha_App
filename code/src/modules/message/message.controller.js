@@ -23,7 +23,7 @@ router.post("/:receiverId",
     ,
     validateRequest(sendMessageShcema),
     async (req, res, next) => {
-        if (!req.body?.content && !req.file?.lenght) {
+        if (!req.body?.content && !req.files?.length) {
             return errorResponse({res,status:400 ,error:{message:"missing content or attachments"}})
         }
         const result = await sendMessage(req.params.receiverId, req.body, req.files, req.user) 

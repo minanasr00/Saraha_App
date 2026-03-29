@@ -16,29 +16,48 @@ export const sendMessage = async (receiverId, { content = undefined, senderId } 
 
 
 export const getMessage = async (messageId, user) => {
-    const message = findOne(MessageModel, {
+    const message = await findOne(MessageModel, {
         _id: messageId,
         $or: [
             {receiverId:user._id},
             {senderId:user._id}
         ]
-    }, {projection:"-senderId"})
+    })
     if (!message) {
         throw throwError('message not found or not authorized action',404)
     }
-    return message
+    
+    const messageData = message.toObject();
+    messageData.receiverId = messageData.receiverId?.toString();
+
+    if (message.senderId && message.senderId.toString() === user._id.toString()) {
+        messageData.senderId = messageData.senderId?.toString();
+        return messageData; // include senderId for sent messages
+    } else {
+        delete messageData.senderId;
+        return messageData; // exclude senderId for received messages
+    }
 }
 export const getAllMessages = async (user) => {
-    const message = findAll(MessageModel, {
+    const messages = await findAll(MessageModel, {
         $or: [
             {receiverId:user._id},
             {senderId:user._id}
         ]
-    }, {projection:"-senderId"})
-    if (!message) {
-        throw throwError('message not found or not authorized action',404)
-    }
-    return message
+    })
+    
+    return messages.map(msg => {
+        const msgData = msg.toObject();
+        msgData.receiverId = msgData.receiverId?.toString();
+
+        if (msg.senderId && msg.senderId.toString() === user._id.toString()) {
+            msgData.senderId = msgData.senderId?.toString();
+            return msgData; // include senderId for sent messages
+        } else {
+            delete msgData.senderId;
+            return msgData; // exclude senderId for received messages
+        }
+    })
 }
 export const delMessage = async (messageId, user) => {
     const message =await deleteOne(MessageModel, {
