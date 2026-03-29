@@ -59,7 +59,7 @@ router.patch('/profile-image',
 router.patch('/cover-image',
   authentication(),
   localFileUpload({ customPath: 'users/cover', validation: fileFieldValidation.images, maxSize: 5 }).array('attachments', 3),
-  validateRequest(CoverPictureSchema),
+  // validateRequest(CoverPictureSchema),
   async (req, res, next) => { 
     const coverImage = await coverPicture(req.user, req.files);
     return successResponse({
