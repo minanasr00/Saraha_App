@@ -6,9 +6,13 @@ import { errorResponse, wrongRouteResponse } from "./common/index.js";
 import { messageRouter, userRouter } from "./modules/index.js";
 import { port } from "../config/config.service.js";
 import { redisClient, redisConnect } from "./db/models/redis.connection.js";
+import path from 'node:path';
 import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import  helmet  from 'helmet';
 import rateLimit, { ipKeyGenerator } from "express-rate-limit"
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default async function bootstrap() {
   const app = express();
   app.set("trust proxy" , true)
@@ -62,12 +66,15 @@ export default async function bootstrap() {
   app.use("/api/message",messageRouter)
 
   // SPA fallback
-  app.get('*', (req, res) => {
-    res.sendFile(resolve('../frontEnd/dist/index.html'));
+  app.use((req, res, next) => {
+    if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
+      return next();
+    }
+    res.sendFile(path.join(__dirname, '../../frontEnd/dist/index.html'));
   });
 
   //route handling error
-  app.use("{/*dummy}", (req, res) => {
+  app.use((req, res) => {
     wrongRouteResponse(res);
   });
 
