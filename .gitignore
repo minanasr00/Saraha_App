@@ -4,9 +4,13 @@
 # Environment variables
 /code/config/.env.development
 /code/config/.env.production
+frontEnd/.env
+
+# Build output
+frontEnd/dist/
 
 #opload file
 uploads
 
-#forntend 
-frontEnd
+# frontend
+frontEnd/node_modules
