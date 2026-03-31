@@ -14,6 +14,7 @@ export default async function bootstrap() {
   app.set("trust proxy" , true)
   //static files
   app.use("/uploads", express.static(resolve("../uploads/")));
+  app.use(express.static(resolve("../frontEnd/dist")));
   
   //DB connection
   await authenticateDB();
@@ -57,8 +58,13 @@ export default async function bootstrap() {
   app.use(cors(),helmet(),express.json());
 
   //route handling
-  app.use("/user", userRouter);
-  app.use("/message",messageRouter)
+  app.use("/api/user", userRouter);
+  app.use("/api/message",messageRouter)
+
+  // SPA fallback
+  app.get('*', (req, res) => {
+    res.sendFile(resolve('../frontEnd/dist/index.html'));
+  });
 
   //route handling error
   app.use("{/*dummy}", (req, res) => {
