@@ -26,7 +26,7 @@ const Login = () => {
     try {
       loginSchema.parse(formData);
       setLoading(true);
-      console.log('Attempting login with:', formData);
+      
       await login(formData.email, formData.password);
       console.log('Login successful, navigating to dashboard');
       navigate('/dashboard');
