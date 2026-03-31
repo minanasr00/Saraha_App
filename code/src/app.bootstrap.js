@@ -54,7 +54,7 @@ export default async function bootstrap() {
 //   },
   
 // })
-  app.get("/", (req, res, next) => {
+  app.get("/api", (req, res, next) => {
   res.json("hello world")
 })
   
