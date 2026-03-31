@@ -74,9 +74,9 @@ export default async function bootstrap() {
   });
 
   //route handling error
-  app.use((req, res) => {
+  app.use("/api/*dummy", (req, res,next) => {
     wrongRouteResponse(res);
-  });
+  }); 
 
   //error handling
   app.use((err, req, res, next) => {
